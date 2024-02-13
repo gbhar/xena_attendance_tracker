@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<APIProxy revision="2" name="ts-xena-training-demo">
+    <Basepaths>/ts-xena-training-demo</Basepaths>
+    <ConfigurationVersion majorVersion="4" minorVersion="0"/>
+    <Description></Description>
+    <DisplayName>ts-xena-training-demo</DisplayName>
+    <Policies>
+        <Policy>Lambda-Callout</Policy>
+        <Policy>Set-Function-Name-And-Region</Policy>
+        <Policy>get-kvm-aws</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>jsc://set-function-name-and-region.js</Resource>
+    </Resources>
+    <Spec></Spec>
+    <TargetServers/>
+    <TargetEndpoints/>
+</APIProxy>

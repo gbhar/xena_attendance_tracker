@@ -1,0 +1,61 @@
+{
+  "name": "at-frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The frontend for the Attendance Tracker.",
+  "dependencies": {
+    "@material-ui/core": "^4.12.1",
+    "@material-ui/icons": "^4.11.2",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.0.0",
+    "@testing-library/user-event": "^13.1.9",
+    "lodash": "^4.17.21",
+    "prop-types": "^15.7.2",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-scripts": "^3.4.4"
+  },
+  "proxy": "http://at-backend:5000",
+  "scripts": {
+    "precommit": "npx lint-staged",
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "npx react-scripts test --watchAll=false",
+    "eject": "react-scripts eject",
+    "coverage": "react-scripts test --coverage --watchAll=false",
+    "format": "npx prettier --write \"**/*.+(js|jsx|json)\"",
+    "lint": "npx eslint ./src",
+    "validate": "npm run lint && npm run format -- --list-different"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-jest": "^24.4.0",
+    "eslint-plugin-react": "^7.25.1",
+    "lint-staged": "^11.1.2",
+    "prettier": "2.4.1",
+    "stylelint": "^13.13.1",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^22.0.0"
+  },
+  "jest": {
+    "coveragePathIgnorePatterns": [
+      "src/serviceWorker.js",
+      "src/index.js"
+    ]
+  }
+}

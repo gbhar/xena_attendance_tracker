@@ -1,0 +1,57 @@
+{
+  "name": "at-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "The backend for the Attendance Tracker.",
+  "scripts": {
+    "precommit": "npx lint-staged",
+    "start:development": "npx nodemon --inspect=0.0.0.0 ./src/app.js | npx pino-pretty -c -t SYS:mm/dd/yyyy h:MM:ss TT -i hostname,pid",
+    "start:production": "node ./src/app.js",
+    "lint": "npx eslint ./src/app.js ./src/routes",
+    "format": "npx prettier --write \"**/*.+(js|jsx|json)\"",
+    "seed": "npx sequelize-cli db:seed:all",
+    "migrate": "npx sequelize-cli db:migrate",
+    "rollback": "npx sequelize-cli db:migrate:undo",
+    "rollback:all": "npx sequelize-cli db:migrate:undo:all",
+    "test": "NODE_ENV=test npx mocha './src/**/*.test.js' --exit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-sts": "^3.112.0",
+    "@aws-sdk/credential-provider-node": "^3.112.0",
+    "aws-sdk": "^2.1157.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-pino-logger": "^7.0.0",
+    "js-yaml": "^4.1.0",
+    "multer": "^1.4.5-lts.1",
+    "mysql2": "^2.3.3",
+    "pino": "^8.2.0",
+    "pino-pretty": "^8.1.0",
+    "sequelize": "^6.21.0",
+    "sequelize-cli": "^6.4.1",
+    "swagger-ui-express": "^4.4.0",
+    "tesseract.js": "^2.1.5"
+  },
+  "devDependencies": {
+    "chai": "^4.3.6",
+    "eslint": "^8.18.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-node": "^4.1.0",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.30.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "lint-staged": "^13.0.2",
+    "mocha": "^10.0.0",
+    "nodemon": "^2.0.16",
+    "prettier": "2.7.1",
+    "supertest": "^6.2.3"
+  },
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "main": "./src/app.js"
+}

@@ -1,0 +1,10 @@
+**/Output/
+*.pyc
+**/Virtualenv/
+.idea/
+.project
+.pydevproject
+**/temp/
+**cumulusci.yml
+**/*.log
+*.pabotsuitenames

@@ -1,0 +1,30 @@
+{
+  "name": "xena-training-app",
+  "version": "1.0.0",
+  "description": "The XENA Training App (Attendance Tracker).",
+  "private": true,
+  "devDependencies": {
+    "husky": "^7.0.2",
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "prepare": "npx husky install",
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install --legacy-peer-deps",
+    "lint": "npm run lint:frontend && npm run lint:backend",
+    "lint:frontend": "cd frontend && npm run lint",
+    "lint:backend": "cd backend && npm run lint",
+    "format": "npm run format:frontend && npm run format:backend",
+    "format:frontend": "cd frontend && npm run format",
+    "format:backend": "cd backend && npm run format",
+    "test": "npm run test:frontend && npm run test:backend",
+    "test:frontend": "cd frontend && npm run test",
+    "test:backend": "cd backend && npm run test",
+    "precommit": "npx npm-run-all --npm-path npm precommit:*",
+    "precommit:frontend": "cd frontend && npm run precommit",
+    "precommit:backend": "cd backend && npm run precommit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://sourcecode.jnj.com/scm/asx-xena/xena-training-app.git"
+  }
+}

@@ -1,0 +1,4 @@
+ext.buildSystemDir = file("${System.env.BUILD_SYSTEM_ROOT}/${buildSystemVersion}")
+
+apply from: "${buildSystemDir}/bdd-test-library.gradle"
+apply from: 'dependencies.gradle'

@@ -1,0 +1,346 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0
+  title: Attendance Tracker API
+
+servers:
+  - url: /api
+
+tags:
+  - name: Students
+    description: Student Based Routes
+  - name: Teachers
+    description: Teacher Based Routes
+
+paths:
+  /students:
+    get:
+      tags:
+        - Students
+      description: Retrieves a list of all students
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Student"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+    post:
+      tags:
+        - Students
+      description: Creates and returns a new student (or an error in the case of one)
+      requestBody:
+        description: Student creation request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStudentRequest"
+      responses:
+        "201":
+          description: Successfully created a student
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentMessageResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /students/{studentId}:
+    get:
+      tags:
+        - Students
+      description: Retrieve a student by his/her ID
+      parameters:
+        - in: path
+          name: studentId
+          schema:
+            type: integer
+          required: true
+          description: The numeric ID of the student to get
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: "#/components/schemas/Student"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /students/late:
+    post:
+      tags:
+        - Students
+      description: Marks the selected student as late
+      requestBody:
+        description: Student late body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateStudentLateRequest"
+      responses:
+        "200":
+          description: Successfully marked student as late
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/StudentMessageResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /process-image:
+    post:
+      tags:
+        - Students
+      description: Takes in an image and returns text found on it after OCR processing
+      requestBody:
+        description: Process image body
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                student-id:
+                  type: string
+                  format: binary
+                  description: An image (with a PNG or JPG extension) that contains the student's email to mark as late.
+            encoding:
+              student-id:
+                contentType: image/png, image/jpeg
+      responses:
+        "200":
+          description: Successfully processed image
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProcessImageResponse"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /teachers:
+    get:
+      tags:
+        - Teachers
+      description: Retrieves a list of all teachers
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/TeacherWithStudents"
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          description: A description of the error.
+          type: string
+
+    CreateStudentLateRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The email of the student.
+        lastLate:
+          type: string
+          format: date-time
+          description: The datetime of the last instance of the student being late.
+      required:
+        - email
+
+    CreateStudentRequest:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the student.
+        lastName:
+          type: string
+          description: The last name of the student.
+        email:
+          type: string
+          format: email
+          description: The email of the student.
+        lastLate:
+          type: string
+          format: date-time
+          description: The datetime of the last instance of the student being late.
+        latesCount:
+          type: number
+          description: The current count of the number of times this student was late.
+          default: 0
+          example: 0
+        latesAllowed:
+          type: number
+          description: The total number of lates that this student is allotted.
+          example: 5
+          default: 5
+        homeRoomTeacherEmail:
+          type: string
+          format: email
+          description: The email of the student's homeroom teacher.
+      required:
+        - firstName
+        - lastName
+        - email
+        - homeRoomTeacherEmail
+
+    StudentMessageResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Student"
+        message:
+          type: string
+
+    ProcessImageResponse:
+      type: object
+      properties:
+        data:
+          $ref: "#/components/schemas/Student"
+
+    Student:
+      type: object
+      properties:
+        id:
+          type: number
+          description: The ID of the student.
+        firstName:
+          type: string
+          description: The first name of the student.
+        lastName:
+          type: string
+          description: The last name of the student.
+        email:
+          type: string
+          format: email
+          description: The email of the student.
+        lastLate:
+          type: string
+          format: date-time
+          description: The datetime of the last instance of the student being .
+        latesCount:
+          type: number
+          description: The current count of the number of times this student was late.
+        latesAllowed:
+          type: number
+          description: The total number of lates that this student is allotted.
+        HomeRoomTeacher:
+          description: The student's homeroom teacher.
+          $ref: "#/components/schemas/Teacher"
+
+    TeacherWithStudents:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the teacher.
+        lastName:
+          type: string
+          description: The last name of the teacher.
+        email:
+          type: string
+          format: email
+          description: The email of the teacher.
+        Students:
+          type: array
+          items:
+            type: object
+            properties:
+              firstName:
+                type: string
+                description: The first name of the student.
+              lastName:
+                type: string
+                description: The last name of the student.
+              email:
+                type: string
+                format: email
+                description: The email of the student.
+
+    Teacher:
+      type: object
+      properties:
+        firstName:
+          type: string
+          description: The first name of the teacher.
+        lastName:
+          type: string
+          description: The last name of the teacher.
+        email:
+          type: string
+          format: email
+          description: The email of the teacher.

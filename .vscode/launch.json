@@ -1,0 +1,27 @@
+ // VSCode configuration for debugging the backend
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Attach to Backend",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "address": "localhost",
+      "localRoot": "${workspaceFolder}/backend/src",
+      "remoteRoot": "/app/src",
+      "skipFiles": [
+        "<node_internals>/**/*.js",
+        "**/node_modules/**/*.js",
+        "loader.js",
+        "async_hooks.js",
+        "bootstrap.js",
+        "**/async_hooks.js",
+        "**/webpack/bootstrap",
+        "**/internal/**/*",
+        "**/domain.js",
+        "**/events.js"      ],
+      "protocol": "inspector",
+      "restart": true    }
+  ]
+}

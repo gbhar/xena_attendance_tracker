@@ -1,0 +1,11 @@
+ext {
+    hyperionVersion = '1.3.1'
+}
+
+dependencies {
+    implementation(group: 'com.asdna.aste', name: 'hyperion', version: hyperionVersion)
+    implementation(group: 'com.asdna.aste', name: 'plugin-ui', version: hyperionVersion)
+    implementation(group: 'com.asdna.aste', name: 'plugin-web-integration', version: hyperionVersion)
+    implementation(group: 'com.asdna.aste', name: 'plugin-web-ui', version: hyperionVersion)
+    implementation(group: 'com.asdna.aste', name: 'plugin-rest-api', version: hyperionVersion)
+}

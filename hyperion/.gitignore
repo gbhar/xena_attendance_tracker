@@ -1,0 +1,21 @@
+#Ignore Gradle cache
+.gradle
+
+#Ignore Eclipse files
+.settings
+.project
+.classpath
+/bin/
+
+#Ignore OSX files
+*.DS_Store
+
+#Ignore Hyperion Report Artifacts
+/output/
+
+#Ignore IntelliJ files
+*.iml
+*.iws
+*.ipr
+.idea/
+out/
